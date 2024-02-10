@@ -14,3 +14,6 @@ class CommentDeleteView(PermissionRequiredMixin, DeleteView):
         comment = get_object_or_404(self.model, pk=kwargs['pk'])
         comment.delete()
         return HttpResponseRedirect(self.success_url)
+
+    def has_permission(self):
+        return super().has_permission() or self.request.user == self.get_object().author

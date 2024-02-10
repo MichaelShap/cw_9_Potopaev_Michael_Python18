@@ -1,5 +1,4 @@
 from django.urls import path
-
 from webapp.views.advert_views import IndexView, AdvertView, AdvertCreateView, AdvertUpdateView, AdvertDeleteView
 from webapp.views.comment_views import CommentDeleteView
 

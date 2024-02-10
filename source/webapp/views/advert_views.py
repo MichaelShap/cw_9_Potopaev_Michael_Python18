@@ -1,9 +1,8 @@
 from urllib.parse import urlencode
-
 from django.db.models import Q
 from django.http import HttpResponseRedirect
-from django.shortcuts import render, get_object_or_404, reverse, redirect
-from webapp.models import Advert, Category, Comment
+from django.shortcuts import render, get_object_or_404, redirect
+from webapp.models import Advert, Comment
 from webapp.forms import CommentForm, AdvertForm, SimpleSearchForm
 from django.views.generic import DetailView, UpdateView, DeleteView, ListView, CreateView
 from django.urls import reverse_lazy
@@ -48,15 +47,6 @@ class IndexView(ListView):
         return context
 
 
-# class AdvertView(DetailView):
-#     model = Advert
-#     template_name = 'adverts/detail_advert.html'
-#
-#     def get_context_data(self, **kwargs):
-#         context = super().get_context_data(**kwargs)
-#         context['advert_comments'] = self.object.advert_comments.order_by('-created')
-#         return context
-
 class AdvertView(LoginRequiredMixin, DetailView):
     template_name = 'adverts/detail_advert.html'
 
@@ -82,6 +72,7 @@ class AdvertView(LoginRequiredMixin, DetailView):
 
         return render(request, self.template_name, {'advert': advert, 'comments': comments, 'form': form})
 
+
 class AdvertCreateView(LoginRequiredMixin, CreateView):
     template_name = 'adverts/add_advert.html'
     model = Advert
@@ -101,12 +92,16 @@ class AdvertUpdateView(PermissionRequiredMixin, UpdateView):
     permission_required = 'webapp.change_advert'
 
     def has_permission(self):
-        return super().has_permission() or self.request.user == self.get_object().author
+        if self.get_object().status != 'canceled':
+            return super().has_permission() or self.request.user == self.get_object().author
+        else:
+            return False
 
     def form_valid(self, form):
-        self.advert = form.save(commit=False)
-        form.save()
-        return redirect('webapp:advert_view', pk=self.advert.pk)
+        advert = form.save(commit=False)
+        advert.advert_status = 'moderation'
+        advert.save()
+        return redirect('webapp:advert_view', pk=advert.pk)
 
 
 class AdvertDeleteView(PermissionRequiredMixin, DeleteView):
@@ -119,3 +114,6 @@ class AdvertDeleteView(PermissionRequiredMixin, DeleteView):
         advert.advert_status = 'deleted'
         advert.save()
         return HttpResponseRedirect(self.success_url)
+
+    def has_permission(self):
+        return super().has_permission() or self.request.user == self.get_object().author
