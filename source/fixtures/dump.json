@@ -1,0 +1,187 @@
+[
+{
+  "model": "webapp.category",
+  "pk": 1,
+  "fields": {
+    "name": "Недвижимость"
+  }
+},
+{
+  "model": "webapp.category",
+  "pk": 2,
+  "fields": {
+    "name": "Авто"
+  }
+},
+{
+  "model": "webapp.category",
+  "pk": 3,
+  "fields": {
+    "name": "Разное"
+  }
+},
+{
+  "model": "webapp.advert",
+  "pk": 2,
+  "fields": {
+    "photo": "user_pics/гараж.jpg",
+    "title": "товар 1",
+    "description": "ываыа",
+    "author": 2,
+    "advert_category": 1,
+    "price": 10000,
+    "advert_status": "published",
+    "created": "2024-02-10T09:06:25.772Z",
+    "published": "2024-02-10T10:08:27.933Z",
+    "updated": "2024-02-10T10:08:27.933Z"
+  }
+},
+{
+  "model": "webapp.advert",
+  "pk": 3,
+  "fields": {
+    "photo": "",
+    "title": "2",
+    "description": "ыуаыаы",
+    "author": 3,
+    "advert_category": 1,
+    "price": 1000,
+    "advert_status": "moderation",
+    "created": "2024-02-10T09:15:00.568Z",
+    "published": "2024-02-10T09:15:00.568Z",
+    "updated": "2024-02-10T09:15:00.568Z"
+  }
+},
+{
+  "model": "webapp.advert",
+  "pk": 4,
+  "fields": {
+    "photo": "",
+    "title": "3",
+    "description": "3",
+    "author": 2,
+    "advert_category": 2,
+    "price": 2,
+    "advert_status": "published",
+    "created": "2024-02-10T09:17:59.122Z",
+    "published": "2024-02-10T09:17:43Z",
+    "updated": "2024-02-10T09:17:59.122Z"
+  }
+},
+{
+  "model": "webapp.advert",
+  "pk": 5,
+  "fields": {
+    "photo": "",
+    "title": "good 4",
+    "description": "test",
+    "author": 2,
+    "advert_category": 2,
+    "price": 2222,
+    "advert_status": "published",
+    "created": "2024-02-10T09:48:03.527Z",
+    "published": null,
+    "updated": "2024-02-10T09:48:17.997Z"
+  }
+},
+{
+  "model": "webapp.advert",
+  "pk": 6,
+  "fields": {
+    "photo": "",
+    "title": "good 5",
+    "description": "qweqwe",
+    "author": 2,
+    "advert_category": 1,
+    "price": 4,
+    "advert_status": "published",
+    "created": "2024-02-10T09:49:28.739Z",
+    "published": "2024-02-10T09:49:54.408Z",
+    "updated": "2024-02-10T09:49:54.408Z"
+  }
+},
+{
+  "model": "webapp.advert",
+  "pk": 7,
+  "fields": {
+    "photo": "",
+    "title": "advert 6",
+    "description": "sfdgdffd",
+    "author": 3,
+    "advert_category": 3,
+    "price": 10,
+    "advert_status": "published",
+    "created": "2024-02-10T10:18:44.604Z",
+    "published": "2024-02-10T10:18:44.604Z",
+    "updated": "2024-02-10T10:18:44.604Z"
+  }
+},
+{
+  "model": "webapp.advert",
+  "pk": 8,
+  "fields": {
+    "photo": "",
+    "title": "advert 7",
+    "description": "sgftghnhjnmj\r\nghn\r\nhghg\r\nhmhmhj\r\nmhjm\r\njhmjh\r\nm\r\njh\r\nmj",
+    "author": 2,
+    "advert_category": 3,
+    "price": 10,
+    "advert_status": "published",
+    "created": "2024-02-10T10:19:07.215Z",
+    "published": "2024-02-10T10:19:07.215Z",
+    "updated": "2024-02-10T10:19:07.215Z"
+  }
+},
+{
+  "model": "webapp.advert",
+  "pk": 9,
+  "fields": {
+    "photo": "user_pics/гараж_9FSOWKW.jpg",
+    "title": "admin advert",
+    "description": "",
+    "author": 2,
+    "advert_category": 3,
+    "price": 100,
+    "advert_status": "moderation",
+    "created": "2024-02-10T11:24:05.600Z",
+    "published": "2024-02-10T11:24:05.600Z",
+    "updated": "2024-02-10T11:24:05.600Z"
+  }
+},
+{
+  "model": "webapp.advert",
+  "pk": 10,
+  "fields": {
+    "photo": "",
+    "title": "admin advert 666",
+    "description": "",
+    "author": 1,
+    "advert_category": 3,
+    "price": 100,
+    "advert_status": "deleted",
+    "created": "2024-02-10T11:26:13.615Z",
+    "published": "2024-02-10T11:52:50.199Z",
+    "updated": "2024-02-10T11:52:50.199Z"
+  }
+},
+{
+  "model": "webapp.comment",
+  "pk": 1,
+  "fields": {
+    "text": "Продаю гараж!",
+    "author": 1,
+    "advert": 2,
+    "created": "2024-02-10T12:08:06.211Z"
+  }
+},
+{
+  "model": "webapp.comment",
+  "pk": 5,
+  "fields": {
+    "text": "тел: 111 111 111",
+    "author": 1,
+    "advert": 2,
+    "created": "2024-02-10T12:15:19.401Z"
+  }
+}
+]
