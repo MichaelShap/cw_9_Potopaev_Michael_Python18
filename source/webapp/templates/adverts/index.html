@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+
+{% block title %}Main{% endblock %}
+
+{% block menu %}
+{% endblock %}
+
+{% block content %}
+
+    {% if photos %}
+        {% for photo in photos %}
+            {% include 'partial/advert.html' %}
+        {% endfor %}
+    {% else %}
+        <h3 style="color: red;">Пока нет объявлений :( </h3>
+    {% endif %}
+
+{% endblock %}

@@ -1,9 +1,9 @@
 from django.urls import path
 
-from webapp.views import index
+from webapp.views.advert_views import IndexView
 
 app_name = 'webapp'
 
 urlpatterns = [
-    path('', index, name='index'),
+    path('', IndexView.as_view(), name='index'),
 ]

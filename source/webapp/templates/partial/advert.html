@@ -1,0 +1,28 @@
+<div class="card border-grey mb-3 mx-auto" style="max-width: 50%;">
+
+    <div class="card-header bg-transparent border-success">
+{#        <div class="d-flex justify-content-between">#}
+{#            <div class="d-inline-block">#}
+                <p>{{ advert.title }}</p>
+                <p>Категория: {{ advert.advert_category }}</p>
+{#            </div>#}
+{#        </div>#}
+    </div>
+
+    <div class="card-body text-success text-center">
+        <p>{{ advert.description }}</p>
+        <p>{{ advert.price }} $</p>
+        {% if {{ advert.photo }} %}
+            <p>{{ advert.photo }}</p>
+        {% endif %}
+    
+    </div>
+
+
+    <div class="card-footer bg-transparent border-success">
+        <p>Разместил: <a href="{% url 'accounts:user_detail' pk=advert.author.id %}">{{ advert.author.username }}</a></p>
+        <p>Опубликовано: {{ advert.published }}</p>
+        
+    </div>
+
+</div>
