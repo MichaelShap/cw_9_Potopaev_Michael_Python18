@@ -8,6 +8,6 @@ class CustomUserAdmin(UserAdmin):
     filter_horizontal = ("groups", "user_permissions")
 
 
-CustomUserAdmin.fieldsets += ('Custom fields set', {'fields': ('custom_field',)}),
+CustomUserAdmin.fieldsets += ('Custom fields set', {'fields': ('phone_number',)}),
 
 admin.site.register(User, CustomUserAdmin)
