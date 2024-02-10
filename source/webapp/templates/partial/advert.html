@@ -1,28 +1,33 @@
-<div class="card border-grey mb-3 mx-auto" style="max-width: 50%;">
+{% if is_paginated %}
+    {% include 'partial/pagination.html' %}
+{% endif %} 
 
-    <div class="card-header bg-transparent border-success">
-{#        <div class="d-flex justify-content-between">#}
-{#            <div class="d-inline-block">#}
-                <p>{{ advert.title }}</p>
-                <p>Категория: {{ advert.advert_category }}</p>
-{#            </div>#}
-{#        </div>#}
-    </div>
-
-    <div class="card-body text-success text-center">
-        <p>{{ advert.description }}</p>
-        <p>{{ advert.price }} $</p>
-        {% if {{ advert.photo }} %}
-            <p>{{ advert.photo }}</p>
-        {% endif %}
+{% if adverts %}
+    {% for advert in adverts %}
+        <div class="card m-3" style="width: 50%;">
     
-    </div>
-
-
-    <div class="card-footer bg-transparent border-success">
-        <p>Разместил: <a href="{% url 'accounts:user_detail' pk=advert.author.id %}">{{ advert.author.username }}</a></p>
-        <p>Опубликовано: {{ advert.published }}</p>
-        
-    </div>
-
-</div>
+            <div class="card-body">
+                <h5 class="card-title">{{ advert.title }}</h5>
+                <p class="card-text">Категория: {{ advert.advert_category }}</p>
+            </div>
+    
+            <ul class="list-group list-group-flush">
+                <li class="list-group-item">Описание: {{ advert.description }}</li>
+                <li class="list-group-item">Цена: {{ advert.price }} $</li>
+            </ul>
+    
+            {% if advert.photo %}
+                <img src="{{ advert.photo.url }}" alt="AdvertPhoto" width="300" height="250">
+            {% endif %}
+    
+            <div class="card-body">
+                <p>Разместил: <a
+                        href="{% url 'accounts:user_detail' pk=advert.author.id %}">{{ advert.author.username }}</a></p>
+                <p>Опубликовано: {{ advert.published }}</p>
+                <a href="#" class="card-link">Card link</a>
+                <a href="#" class="card-link">Another link</a>
+            </div>
+    
+        </div>
+    {% endfor %}
+{% endif %}

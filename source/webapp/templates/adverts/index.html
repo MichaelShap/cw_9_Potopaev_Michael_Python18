@@ -7,12 +7,12 @@
 
 {% block content %}
 
-    {% if photos %}
-        {% for photo in photos %}
-            {% include 'partial/advert.html' %}
-        {% endfor %}
-    {% else %}
-        <h3 style="color: red;">Пока нет объявлений :( </h3>
-    {% endif %}
+    <div>
+        {% include 'partial/simple_search.html' %}
+    </div></p>
+
+    <div style="display: flex; flex-direction: column; align-items: center; justify-content: center;">
+        {% include 'partial/advert.html' %}
+    </div>
 
 {% endblock %}

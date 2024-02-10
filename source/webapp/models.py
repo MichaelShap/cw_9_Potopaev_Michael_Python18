@@ -26,7 +26,7 @@ class Advert(models.Model):
     advert_status = models.CharField(max_length=50, choices=STATUS, default='moderation', null=False, blank=False,
                                      verbose_name='Status')
     created = models.DateTimeField(auto_now_add=True, verbose_name='Created at')
-    published = models.DateTimeField(auto_now=False, null=True, blank=True, verbose_name='Published at')
+    published = models.DateTimeField(auto_now=True, null=True, blank=True, verbose_name='Published at')
     updated = models.DateTimeField(auto_now=True, null=True, blank=True, verbose_name='Updated at')
 
     def __str__(self):
