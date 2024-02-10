@@ -1,10 +1,10 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+{% extends 'base.html' %}
 
-</body>
-</html>
+{% block title %}Create Advert{% endblock %}
+
+{% block content %}
+<h1>Добавить объявление</h1>
+    
+    {% include 'partial/form.html' with value_submit='Create' form_method='post'  %}
+
+{% endblock %}

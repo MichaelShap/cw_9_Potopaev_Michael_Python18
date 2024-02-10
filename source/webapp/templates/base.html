@@ -29,7 +29,7 @@
             
                 {% if request.user.is_authenticated %}
                 <li class="nav-item">
-                    <a class="navbar-brand" href="#">Добавить объявление |</a>
+                    <a class="navbar-brand" href="{% url 'webapp:advert_create' %}">Добавить объявление |</a>
                 </li>
                 {% endif %}
 

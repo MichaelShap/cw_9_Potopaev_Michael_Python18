@@ -1,15 +1,9 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+{% extends 'base.html' %}
+{% block content %}
     <h1>Вы можете изменить личные данные:</h1>
 
     <form action="{% url 'accounts:user_change' user_obj.pk %}" method="post" enctype="multipart/form-data">
         {% csrf_token %}
         {% include 'partial/form.html' with form=form fields_only=True form_method='post' value_submit='Обновить' %}
     </form>
-</body>
-</html>
+{% endblock %}

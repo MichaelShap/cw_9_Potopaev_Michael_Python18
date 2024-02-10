@@ -2,6 +2,7 @@ from datetime import timezone
 from urllib.parse import urlencode
 
 from django.db.models import Q
+from django.http import HttpResponseRedirect
 from django.shortcuts import render, get_object_or_404, reverse, redirect
 from webapp.models import Advert, Category, Comment
 from webapp.forms import CommentForm, AdvertForm, SimpleSearchForm
@@ -39,7 +40,6 @@ class IndexView(ListView):
             return queryset
         return Advert.objects.filter(advert_status='published')
 
-
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super().get_context_data(object_list=object_list, **kwargs)
         context['form'] = self.search_form
@@ -47,3 +47,52 @@ class IndexView(ListView):
             context['query'] = urlencode({'search': self.search_value})
             context['search_value'] = self.search_value
         return context
+
+
+class AdvertView(DetailView):
+    model = Advert
+    template_name = 'adverts/detail_advert.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['advert_comments'] = self.object.advert_comments.order_by('-created')
+        return context
+
+
+class AdvertCreateView(LoginRequiredMixin, CreateView):
+    template_name = 'adverts/add_advert.html'
+    model = Advert
+    form_class = AdvertForm
+
+    def form_valid(self, form):
+        self.advert = form.save(commit=False)
+        self.advert.author = self.request.user
+        self.advert.save()
+        return redirect('webapp:advert_view', pk=self.advert.pk)
+
+
+class AdvertUpdateView(PermissionRequiredMixin, UpdateView):
+    template_name = 'adverts/update_advert.html'
+    model = Advert
+    form_class = AdvertForm
+    permission_required = 'webapp.change_advert'
+
+    def has_permission(self):
+        return super().has_permission() or self.request.user == self.get_object().author
+
+    def form_valid(self, form):
+        self.advert = form.save(commit=False)
+        form.save()
+        return redirect('webapp:advert_view', pk=self.advert.pk)
+
+
+class AdvertDeleteView(PermissionRequiredMixin, DeleteView):
+    model = Advert
+    success_url = reverse_lazy('webapp:index')
+    permission_required = 'webapp.delete_advert'
+
+    def get(self, request, *args, **kwargs):
+        advert = get_object_or_404(self.model, pk=kwargs['pk'])
+        advert.advert_status = 'deleted'
+        advert.save()
+        return HttpResponseRedirect(self.success_url)

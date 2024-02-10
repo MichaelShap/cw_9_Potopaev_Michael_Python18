@@ -1,10 +1,58 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+{% extends 'base.html' %}
 
-</body>
-</html>
+{% block title %}{{ advert.title }}{% endblock %}
+
+{% block content %}
+
+    <div class="card m-3" style="width: 50%;">
+        <div class="card-body">
+            <h5 class="card-title">{{ advert.title }}</h5>
+            <p class="card-text">Категория: {{ advert.advert_category }}</p>
+        </div>
+    
+        <ul class="list-group list-group-flush">
+            <li class="list-group-item">Описание: {{ advert.description }}</li>
+            <li class="list-group-item">Цена: {{ advert.price }} $</li>
+        </ul>
+    
+        {% if advert.photo %}
+            <img src="{{ advert.photo.url }}" alt="AdvertPhoto" width="300" height="250">
+        {% endif %}
+    
+        <div class="card-body">
+            <p>Разместил: <a
+                    href="{% url 'accounts:user_detail' pk=advert.author.id %}">{{ advert.author.username }}</a></p>
+            <p>Опубликовано: {{ advert.published }}</p>
+            <a href="#" class="card-link">Подробнее..</a>
+            {% if request.user == advert.author %}
+                <a href="{% url 'webapp:advert_update' pk=advert.pk %}" class="card-link">Редактировать</a>
+                <a href="{% url 'webapp:advert_delete' pk=advert.pk %}" class="card-link">Удалить</a>
+            {% endif %}
+        </div>
+    </div>
+    
+    
+    <h3 class="mt-2">Comments: </h3>
+    <div class="row row-cols-3 mt-2">
+        {% for comment in comments %}
+
+            <div class="col">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Автор: {{ comment.author }}</h5>
+                        <p class="card-text">{{ comment.text }}</p>
+                        <p>{{ article.created_at }}</p>
+
+                        {% if perms.webapp.change_comment or comment.author == request.user %}
+                            <a href="#"
+                               class="card-link">Редактировать</a>
+                        {% endif %}
+                        {% if perms.webapp.delete_comment or comment.author == request.user %}
+                            <a href="#" class="card-link">Удалить</a>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+{% endblock %}

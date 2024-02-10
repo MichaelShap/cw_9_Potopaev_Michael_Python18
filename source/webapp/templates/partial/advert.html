@@ -24,8 +24,11 @@
                 <p>Разместил: <a
                         href="{% url 'accounts:user_detail' pk=advert.author.id %}">{{ advert.author.username }}</a></p>
                 <p>Опубликовано: {{ advert.published }}</p>
-                <a href="#" class="card-link">Card link</a>
-                <a href="#" class="card-link">Another link</a>
+                <a href="{% url 'webapp:advert_view' pk=advert.pk %}" class="card-link">Подробнее..</a>
+                {% if request.user == advert.author %}
+                    <a href="{% url 'webapp:advert_update' pk=advert.pk %}" class="card-link">Редактировать</a>
+                    <a href="{% url 'webapp:advert_delete' pk=advert.pk %}" class="card-link">Удалить</a>
+                {% endif %}
             </div>
     
         </div>
