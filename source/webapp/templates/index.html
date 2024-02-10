@@ -13,6 +13,13 @@
     
     
     {% if user.is_authenticated %}
+        <a href="{% url 'accounts:user_change' pk=user.pk %}">User change</a></p>
+        
+        <a href="{% url 'accounts:password_change' pk=user.pk %}">password change</a></p>
+    {% endif %}
+    
+    
+    {% if user.is_authenticated %}
         <p>Welcome, <a href="{% url 'accounts:user_detail' pk=user.pk %}">{{ user.username }}</a>!</p>
     {% else %}
         <p>Welcome, Guest!</p>

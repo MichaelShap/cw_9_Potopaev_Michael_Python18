@@ -27,3 +27,10 @@ class MyUserCreationForm(forms.ModelForm):
         if commit:
             user.save()
         return user
+
+class UserChangeForm(forms.ModelForm):
+    class Meta:
+        model = User
+        fields = ['first_name', 'last_name', 'phone_number']
+        labels = {'first_name': 'Имя', 'last_name': 'Фамилия', 'phone_number': 'Номер телефона'}
+
