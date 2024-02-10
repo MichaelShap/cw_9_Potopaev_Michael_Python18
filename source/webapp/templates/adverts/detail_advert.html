@@ -31,6 +31,11 @@
         </div>
     </div>
     
+    <form method="post" action="{% url 'webapp:advert_view' pk=advert.pk %}">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Добавить комментарий</button>
+    </form>
     
     <h3 class="mt-2">Comments: </h3>
     <div class="row row-cols-3 mt-2">
@@ -43,12 +48,8 @@
                         <p class="card-text">{{ comment.text }}</p>
                         <p>{{ article.created_at }}</p>
 
-                        {% if perms.webapp.change_comment or comment.author == request.user %}
-                            <a href="#"
-                               class="card-link">Редактировать</a>
-                        {% endif %}
                         {% if perms.webapp.delete_comment or comment.author == request.user %}
-                            <a href="#" class="card-link">Удалить</a>
+                            <a href="{% url 'webapp:comment_delete' pk=comment.pk %}" class="card-link">Удалить</a>
                         {% endif %}
                     </div>
                 </div>

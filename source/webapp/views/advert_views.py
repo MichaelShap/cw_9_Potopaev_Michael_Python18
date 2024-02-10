@@ -1,4 +1,3 @@
-from datetime import timezone
 from urllib.parse import urlencode
 
 from django.db.models import Q
@@ -49,15 +48,39 @@ class IndexView(ListView):
         return context
 
 
-class AdvertView(DetailView):
-    model = Advert
+# class AdvertView(DetailView):
+#     model = Advert
+#     template_name = 'adverts/detail_advert.html'
+#
+#     def get_context_data(self, **kwargs):
+#         context = super().get_context_data(**kwargs)
+#         context['advert_comments'] = self.object.advert_comments.order_by('-created')
+#         return context
+
+class AdvertView(LoginRequiredMixin, DetailView):
     template_name = 'adverts/detail_advert.html'
 
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context['advert_comments'] = self.object.advert_comments.order_by('-created')
-        return context
+    def get(self, request, pk):
+        advert = get_object_or_404(Advert, pk=pk)
+        comments = Comment.objects.filter(advert=advert)
+        form = CommentForm()
 
+        context = {'advert': advert, 'comments': comments, 'form': form}
+        return render(request, self.template_name, context)
+
+    def post(self, request, pk):
+        advert = get_object_or_404(Advert, pk=pk)
+        comments = Comment.objects.filter(advert=advert)
+        form = CommentForm(request.POST)
+
+        if form.is_valid():
+            comment = form.save(commit=False)
+            comment.advert = advert
+            comment.author = request.user
+            comment.save()
+            return render(request, self.template_name, {'advert': advert, 'comments': comments, 'form': CommentForm()})
+
+        return render(request, self.template_name, {'advert': advert, 'comments': comments, 'form': form})
 
 class AdvertCreateView(LoginRequiredMixin, CreateView):
     template_name = 'adverts/add_advert.html'
